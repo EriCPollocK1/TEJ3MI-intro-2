@@ -37,20 +37,31 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-        // Count SW2 button presses
-        if(SW2 == 0)
+        // Count new SW2 button presses
+        if(SW2 == 0 && SW2Pressed == false)
         {
             LED3 = 1;
-            SW2Count = SW2Count + 1;
+            SW2Pressed = true;
+            if(SW2Count < 255)
+            {
+                SW2Count = SW2Count + 1;
+            }
+        }
+
+        // Clear pressed state if released
+        if(SW2 == 1)
+        {
+            LED3 = 0;
+            SW2Pressed = false;
+        }
+        
+         if(SW2Count >= maxCount)
+        {
+            LED4 = 1;
         }
         else
         {
-            LED3 = 0;
-        }
-        
-        if(SW2Count >= maxCount)
-        {
-            LED4 = 1;
+            LED4 = 0;
         }
         
         // Reset count and turn off LED D4
@@ -78,21 +89,25 @@ int main(void)
  *    What is the the maximum value an 8-bit variable can store?
  *    What are some benefits and drawbacks of using 8-bit variables in an 8-bit
  *    microcontroller?
- * 
+the max value for the 8-bit variable is 255, some benefits is that it is most likely faster
+to read, but it can only go to a smaller number.
  * 2. The constant 'maxCount' is defined using a declaration similar to that
  *    used for the SW2Count variable, but with the 'const' prefix added in the
  *    declaration. Can you think of some advantages of declaring a constant like
  *    this, using a separate statement above the main code, rather than just
  *    embedding the value of the constant where it is needed in the code?
- * 
+this allows you to make it so that you can use a short form in the code and make it look cleaner and 
+easier to find mistakes, it means by constant that it will always be that number, no matter what.
  * 3. This program should light LED D3 every time SW2 is pressed, and light
  *    LED D4 once the count reaches 50. Try it, and count how many times you
  *    have to press the button until LED D4 turns on. SW3 resets the count so
  *    you can perform repeated attempts.
- * 
+It varies with how fast I release the button after each press.
  *    Did your count reach 50? Can you describe what the program is doing?
  *    (Hint: try pressing and releasing the button at different rates of speed.)
- * 
+It varied on how fast I could release the button. I could only get to 11 presses max,
+this is because the microcontroller is checking the button so fast that it is counting each
+press as multiple presses.
  * 4. Modify the second 'if' structure to add the else block, as shown below:
 
         if(SW2Count >= maxCount)
@@ -109,7 +124,8 @@ int main(void)
  *    higher than maxCount. If LED D4 turns off, what can you infer about the
  *    value of the SW2Count variable? Can you explain what happens to the
  *    SW2Count variable as the SW2 button is held?
- * 
+It stays on for a while countinously as the button is held but then will turn off for a short period of time.
+I think this is because it reaches a certain point and resets the count.
  * 5. We can set a limit on the SW2Count variable by encapsulating its increment
  *    statement inside a conditional statement. In your program, replace the
  *    line 'SW2Count = SW2Count + 1;' with the code, below:
@@ -124,7 +140,8 @@ int main(void)
  *    but in a more compact form. After adding this code, what is the maximum
  *    value that the SW2Count variable will reach? How does this affect the
  *    operation of LED D4 when SW2 is held?
- *
+it can then go all the way to 255, and since this is the max that the microcontroller can hold,
+it won't turn off the light.
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
  *    in each cycle of the loop and if its state is read as pressed, another
  *    count is added to the SW2Count variable. Rather than responding to state,
