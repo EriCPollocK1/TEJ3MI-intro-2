@@ -23,10 +23,14 @@
 
 // Program constant definitions
 const unsigned char maxCount = 50;
+ #define pressed 0
+ #define notPressed 1
 
 // Program variable definitions
 unsigned char SW2Count = 0;
 bool SW2Pressed = false;
+unsigned char SW5Count = 0;
+bool SW5Pressed = false;
 
 int main(void)
 {
@@ -37,40 +41,21 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-        // Count new SW2 button presses
-        if(SW2 == 0 && SW2Pressed == false)
-        {
-            LED3 = 1;
-            SW2Pressed = true;
-            if(SW2Count < 255)
-            {
-                SW2Count = SW2Count + 1;
-            }
-        }
-
-        // Clear pressed state if released
-        if(SW2 == 1)
-        {
-            LED3 = 0;
-            SW2Pressed = false;
-        }
-        
-         if(SW2Count >= maxCount)
+     /*   if(SW2 == 0 && SW2Pressed == 0)
         {
             LED4 = 1;
+            SW2Pressed = true;
         }
-        else
+        else if(SW2 == 0 && SW2Pressed == 1)
         {
             LED4 = 0;
-        }
-        
-        // Reset count and turn off LED D4
-        if(SW3 == 0)
+            SW2Pressed = false;
+        }    */
+
+        if(SW2 == 0 && SW2Pressed == false)
         {
-            LED4 = 0;
-            SW2Count = 0;
+            
         }
-        
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
@@ -179,7 +164,7 @@ it won't turn off the light.
  *    is set to true before a count is added. The following if structure resets
  *    SW2Pressed to false when the button is released. Try the code to verify
  *    that it works.
- * 
+yes it works.
  *    The conditional statement in the first if condition can also be written:
 
         if(SW2 == 0 && !SW2Pressed)
@@ -234,7 +219,82 @@ it won't turn off the light.
  *    second palyer wins. Use a logical condition statement to reset the game
  *    by clearing the count and turning off the LEDs if either SW3 or SW4 is
  *    pressed.
- * 
+    this is the code for the game
+ while(1)
+	{
+         // player 1 settings
+        if(SW2 == pressed && !SW2Pressed)
+        {
+            LED3 = 1;
+            if(SW2Count < 255)
+            {
+                SW2Count = SW2Count + 1;
+            }
+            SW2Pressed = true;
+        }
+
+        // Clear pressed state if released
+        if(SW2 == notPressed)
+        {
+            LED3 = 0;
+            SW2Pressed = false;
+        }
+
+        if(SW2Count >= maxCount)
+        {
+            LED4 = 1;
+        }
+        else
+        {
+            LED4= 0;
+        }
+
+         // player 2 settings
+        if(SW5 == pressed && !SW5Pressed)
+        {
+            LED6 = 1;
+            if(SW5Count < 255)
+            {
+                SW5Count = SW5Count + 1;
+            }
+            SW5Pressed = true;
+        }
+
+        // Clear pressed state if released
+        if(SW5 == notPressed)
+        {
+            LED6 = 0;
+            SW5Pressed = false;
+        }
+
+        if(SW5Count >= maxCount)
+        {
+            LED5 = 1;
+        }
+        else
+        {
+            LED5= 0;
+        }
+
+        // reset with SW3
+        if(SW3 == 0)
+        {
+            LED4 = 0;
+            SW2Count = 0;
+            LED5 = 0;
+            SW5Count = 0;
+        }
+        
+        // reset with SW4
+
+        if(SW4 == 0)
+        {
+            LED4 = 0;
+            SW2Count = 0;
+            LED5 = 0;
+            SW5Count = 0;
+        }
+
  * 2. Use your knowledge of Boolean variables and logical conditions to simulate
  *    a toggle button. Each new press of the toggle button will 'toggle' an LED
  *    to its opposite state. (Toggle buttons are commonly used as push-on, 
