@@ -22,7 +22,7 @@
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
 
 // Program constant definitions
-const unsigned char maxCount = 50;
+const unsigned char maxCount = 1;
  #define pressed 0
  #define notPressed 1
 
@@ -41,21 +41,18 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-     /*   if(SW2 == 0 && SW2Pressed == 0)
+         // Count new SW2 button presses
+        if(SW2 == 0 && SW2Pressed == false)
         {
             LED4 = 1;
             SW2Pressed = true;
         }
-        else if(SW2 == 0 && SW2Pressed == 1)
+        if(SW2 == 0 && SW2Pressed == true)
         {
             LED4 = 0;
             SW2Pressed = false;
-        }    */
-
-        if(SW2 == 0 && SW2Pressed == false)
-        {
-            
         }
+
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
