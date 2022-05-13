@@ -59,25 +59,54 @@ int main(void)
             {
                 LED4 = 0;
             } */
-               // Count new SW2 button presses
-        if(SW2 == 0 && SW2Pressed == false)
-        {
-            LED4 = 1;
-            SW2Pressed = true;
-        }
 
-        // Clear pressed state if released
-        if(SW2 == 1 && SW2Pressed == true)
-        {
-            SW2Pressed = false;
-            SW2Count = SW2Count + 1;
-            }
-        if(SW2Count >= maxCount)
-        {
-            LED4 = 0;
-            SW2Count = 0;
-        }
-}
+             if(SW2 == 0 && SW2Pressed == false)
+             {
+                 SW2Pressed = true;
+             }
+
+             if(SW2 == 1 && SW2Pressed)
+             {
+                 SW2Pressed = false;
+                 SW2Count += 1;
+             }
+             if(SW2Count == 1)
+             {
+                 LED3 = 1;
+             }
+             else
+             {
+                 LED3 = 0;
+             }
+             if(SW2Count == 2)
+             {
+                 LED4 = 1;
+             }
+             else
+             {
+                 LED4 = 0;
+             }
+             if(SW2Count == 3)
+             {
+                 LED5 = 1;
+             }
+             else
+             {
+                 LED5 = 0;
+             }
+             if(SW2Count == 4)
+             {
+                 LED6 = 1;
+             }
+             else
+             {
+                 LED6 = 0;
+             }
+             if(SW3 == 0)
+             {
+                 SW2Count = 0;
+             }
+
         // Add a short delay to the main while loop.
         __delay_ms(10);
         
@@ -86,6 +115,7 @@ int main(void)
         {
             RESET();
         }
+}
 }
 
 /* Program Analysis
@@ -320,14 +350,53 @@ yes it works.
  *    a toggle button. Each new press of the toggle button will 'toggle' an LED
  *    to its opposite state. (Toggle buttons are commonly used as push-on, 
  *    push-off power buttons in digital devices.)
- * 
+
+this is the Code
+ if(SW2 == 0 && SW2Pressed == false)
+        {
+            LED4 = 1;
+            SW2Pressed = true;
+        }
+
+        // Clear pressed state if released
+        if(SW2 == 1 && SW2Pressed == true)
+        {
+            SW2Pressed = false;
+            SW2Count = SW2Count + 1;
+            }
+        if(SW2Count >= maxCount)
+        {
+            LED4 = 0;
+            SW2Count = 0;
+        }
+
  * 3. A multi-function button can be used to enable one action when pressed, and
  *    a second or alternate action when held. A variable that counts loop cycles
  *    can be used to determine how long a button is held (just as the first
  *    program unitentionally did, because of the loop structure). Make a
  *    multifunction button that lights one LED when a button is pressed, and
  *    lights a second LED after the button is held for more that one second.
- * 
+
+   if(SW2 == 0 && SW2Pressed == false)
+        {
+            LED4 = 1;
+            SW2Pressed = true;
+        }
+
+        // Clear pressed state if released
+        if(SW2 == 1)
+        {
+            LED4 = 0;
+            SW2Pressed = false;
+        }
+        if(SW2 == 0 && SW2Pressed == true)
+            {
+                LED4 = 1;
+                __delay_ms(500);
+                LED4 = 0;
+                __delay_ms(500);
+            }
+
  * 4. Do your pushbuttons bounce? Switch bounce is the term that describes
  *    switch contacts repeatedly closing and opening before settling in their
  *    final (usually closed) state. Switch bounce in a room's light switch is
@@ -338,9 +407,58 @@ yes it works.
  *    to reset the count and turn off the LEDs so that the test can be repeated.
  *    To determine if your switches bounce, try pressing them at various speeds
  *    and using different amounts of force.
- * 
+
+if(SW2 == 0 && SW2Pressed == false)
+             {
+                 SW2Pressed = true;
+             }
+
+             if(SW2 == 1 && SW2Pressed)
+             {
+                 SW2Pressed = false;
+                 SW2Count += 1;
+             }
+             if(SW2Count == 1)
+             {
+                 LED3 = 1;
+             }
+             else
+             {
+                 LED3 = 0;
+             }
+             if(SW2Count == 2)
+             {
+                 LED4 = 1;
+             }
+             else
+             {
+                 LED4 = 0;
+             }
+             if(SW2Count == 3)
+             {
+                 LED5 = 1;
+             }
+             else
+             {
+                 LED5 = 0;
+             }
+             if(SW2Count == 4)
+             {
+                 LED6 = 1;
+             }
+             else
+             {
+                 LED6 = 0;
+             }
+             if(SW3 == 0)
+             {
+                 SW2Count = 0;
+             }
+
  * 5. Did your pushbuttons bounce? Can you think of a technique similar to the
  *    multi-function button that could be implemented to make your program
  *    ignore switch bounces. Multiple switch activations within a 50ms time span
  *    might indicate switch bounce and can be safely ignored.
+
+no my buttons don't bounce
  */
